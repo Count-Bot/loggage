@@ -45,37 +45,37 @@ export class Logger {
 			});
 	}
 
-	public fatal_error(message: unknown) {
+	public fatal_error(message: unknown): void {
 		if (this.verbosity.has(Verbosity.FATAL_ERROR)) 
 			this.log(TAGS.FATAL_ERROR, message);
 	}
 
-	public error(message: unknown) {
+	public error(message: unknown): void {
 		if (this.verbosity.has(Verbosity.ERROR))
 			this.log(TAGS.ERROR, message);
 	}
 
-	public warning(message: unknown) {
+	public warning(message: unknown): void {
 		if (this.verbosity.has(Verbosity.WARNING))
 			this.log(TAGS.WARNING, message);
 	}
 
-	public info(message: unknown) {
+	public info(message: unknown): void {
 		if (this.verbosity.has(Verbosity.INFO))
 			this.log(TAGS.INFO, message);
 	}
 
-	public debug(message: unknown) {
+	public debug(message: unknown): void {
 		if (this.verbosity.has(Verbosity.DEBUG))
 			this.log(TAGS?.DEBUG, message);
 	}
 
-	public verbose(message: unknown) {
+	public verbose(message: unknown): void {
 		if (this.verbosity.has(Verbosity.VERBOSE))
 			this.log(TAGS.VERBOSE, message);
 	}
 
-	private log(tag: string, message: unknown) {
+	private log(tag: string, message: unknown): void {
 		const log = `${S.reset(C.green(new Date().toLocaleTimeString()))} ${this.name} ${tag}`;
 
 		this.console.log(log, message);
