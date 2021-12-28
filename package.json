@@ -1,0 +1,19 @@
+{
+	"name": "loggage",
+	"version": "1.0.0",
+	"description": "Simple logging package.",
+	"main": "build/index.js",
+	"type": "module",
+	"author": "Rick-vm",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^16.11.4",
+		"@typescript-eslint/eslint-plugin": "^5.1.0",
+		"@typescript-eslint/parser": "^5.1.0",
+		"eslint": "^7.32.0",
+		"typescript": "^4.4.4"
+	},
+	"scripts": {
+		"app": "tsc && node ."
+	}
+}
