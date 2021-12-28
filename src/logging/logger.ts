@@ -43,7 +43,6 @@ export class Logger {
 	public fatal_error(message: unknown) {
 		if (this.verbosity.has(Verbosity.FATAL_ERROR)) 
 			this.log(TAGS.FATAL_ERROR, message);
-		process.exit();
 	}
 
 	public error(message: unknown) {
