@@ -8,4 +8,5 @@ export const C = {
 	cyan: (text: string) => `\x1b[36m${text}`,
 	white: (text: string) => `\x1b[37m${text}`,
 	orange: (text: string) => `\x1b[38;5;202m${text}`,
+	grey: (text: string) => `\x1b[38;5;243m${text}`,
 };

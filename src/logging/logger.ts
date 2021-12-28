@@ -11,23 +11,26 @@ export const TAGS: Readonly<Record<keyof typeof Verbosity, string>> = {
 	FATAL_ERROR: S.reset(B.red(' ERROR ')) + ' ' + S.reset(B.magenta(' FATAL ')) + pad(' ERROR   FATAL '),
 	ERROR: S.reset(B.red(' ERROR ')) + pad(' ERROR '),
 	WARNING: S.reset(B.orange(' WARNING ')) + pad(' WARNING '),
-	INFO: S.reset(B.yellow(' INFO' )) + pad(' INFO '),
+	INFO: S.reset(B.grey(' INFO ')) + pad(' INFO '),
 	DEBUG: S.reset(B.cyan(' DEBUG ')) + pad(' DEBUG '),
 	VERBOSE: S.reset(B.blue(' VERBOSE ')) + pad(' VERBOSE '),
 };
 
 export class Logger {
 	private readonly console: Console;
-	private readonly file: Console;
+	private readonly file!: Console;
 	private readonly name: string;
 	private readonly verbosity: Set<Verbosity>;
+	private readonly logToFile: boolean;
 
 	constructor({ 
 		name, 
-		verbosity = [Verbosity.FATAL_ERROR, Verbosity.ERROR, Verbosity.WARNING, Verbosity.INFO, Verbosity.DEBUG, Verbosity.VERBOSE] 
+		verbosity = [Verbosity.FATAL_ERROR, Verbosity.ERROR, Verbosity.WARNING, Verbosity.INFO, Verbosity.DEBUG, Verbosity.VERBOSE],
+		logToFile = true,
 	}: LoggerOptions) {
 		this.name = name;
 		this.verbosity = new Set(verbosity);
+		this.logToFile = logToFile;
 
 		this.console = new Console({
 			stdout: process.stdout,
@@ -35,9 +38,11 @@ export class Logger {
 
 		const timestamp = new Date().toLocaleString().replace(/\//g, '-').replace(/:/g, ';').replace(',', '');
 		console.log(timestamp);
-		this.file = new Console({
-			stdout: createWriteStream(`./logs/${name} ${timestamp}.log`),
-		});
+
+		if (logToFile)
+			this.file = new Console({
+				stdout: createWriteStream(`./logs/${name} ${timestamp}.log`),
+			});
 	}
 
 	public fatal_error(message: unknown) {
@@ -74,6 +79,6 @@ export class Logger {
 		const log = `${S.reset(C.green(new Date().toLocaleTimeString()))} ${this.name} ${tag}`;
 
 		this.console.log(log, message);
-		this.file.log(log, message);
+		if (this.logToFile) this.file.log(log, message);
 	}
 }
