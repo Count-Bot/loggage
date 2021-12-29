@@ -20,58 +20,64 @@ export class Logger {
 	private readonly console: Console;
 	private readonly file!: Console;
 	private readonly name: string;
-	private readonly verbosity: Set<Verbosity>;
+	private verbosity: Verbosity;
 	private readonly logToFile: boolean;
 
 	constructor({ 
 		name, 
-		verbosity = [Verbosity.FATAL_ERROR, Verbosity.ERROR, Verbosity.WARNING, Verbosity.INFO, Verbosity.DEBUG, Verbosity.VERBOSE],
+		verbosity = Verbosity.INFO,
 		logToFile = true,
 	}: LoggerOptions) {
 		this.name = name;
-		this.verbosity = new Set(verbosity);
+		this.verbosity = verbosity;
 		this.logToFile = logToFile;
+
+		// Format timestamp
+		const timestamp = new Date().toLocaleString().replace(/\//g, '-').replace(/:/g, ';').replace(',', '');
 
 		this.console = new Console({
 			stdout: process.stdout,
 		});
 
-		const timestamp = new Date().toLocaleString().replace(/\//g, '-').replace(/:/g, ';').replace(',', '');
-		console.log(timestamp);
-
 		if (logToFile)
 			this.file = new Console({
 				stdout: createWriteStream(`./logs/${name} ${timestamp}.log`),
 			});
+
+		this.info(`Logger ${name} started.`);
+	}
+
+	public setVerbosity(verbosity: Verbosity): void {
+		this.verbosity = verbosity;
 	}
 
 	public fatal_error(message: unknown): void {
-		if (this.verbosity.has(Verbosity.FATAL_ERROR)) 
+		if (this.verbosity >= Verbosity.FATAL_ERROR) 
 			this.log(TAGS.FATAL_ERROR, message);
 	}
 
 	public error(message: unknown): void {
-		if (this.verbosity.has(Verbosity.ERROR))
+		if (this.verbosity >= Verbosity.ERROR)
 			this.log(TAGS.ERROR, message);
 	}
 
 	public warning(message: unknown): void {
-		if (this.verbosity.has(Verbosity.WARNING))
+		if (this.verbosity >= Verbosity.WARNING)
 			this.log(TAGS.WARNING, message);
 	}
 
 	public info(message: unknown): void {
-		if (this.verbosity.has(Verbosity.INFO))
+		if (this.verbosity >= Verbosity.INFO)
 			this.log(TAGS.INFO, message);
 	}
 
 	public debug(message: unknown): void {
-		if (this.verbosity.has(Verbosity.DEBUG))
-			this.log(TAGS?.DEBUG, message);
+		if (this.verbosity >= Verbosity.DEBUG)
+			this.log(TAGS.DEBUG, message);
 	}
 
 	public verbose(message: unknown): void {
-		if (this.verbosity.has(Verbosity.VERBOSE))
+		if (this.verbosity >= Verbosity.VERBOSE)
 			this.log(TAGS.VERBOSE, message);
 	}
 

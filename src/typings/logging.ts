@@ -9,6 +9,6 @@ export enum Verbosity {
 
 export interface LoggerOptions {
 	name: string,
-	verbosity?: Verbosity[],
+	verbosity?: Verbosity,
 	logToFile?: boolean,
 }
