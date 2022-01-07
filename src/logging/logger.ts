@@ -19,7 +19,7 @@ export const TAGS: Readonly<Record<keyof typeof Verbosity, string>> = {
 export class Logger {
 	private readonly console: Console;
 	private readonly file!: Console;
-	private readonly name: string;
+	private name: string;
 	private verbosity: Verbosity;
 	private readonly logToFile: boolean;
 
@@ -49,6 +49,10 @@ export class Logger {
 
 	public setVerbosity(verbosity: Verbosity): void {
 		this.verbosity = verbosity;
+	}
+
+	public setName(name: string): void {
+		this.name = name;
 	}
 
 	public fatal_error(message: unknown): void {
