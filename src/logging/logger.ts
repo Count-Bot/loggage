@@ -44,7 +44,7 @@ export class Logger {
 				stdout: createWriteStream(`./logs/${name} ${timestamp}.log`),
 			});
 
-		this.info(`Logger ${name} started.`);
+		this.info(`Logger '${name}' started.`);
 	}
 
 	public setVerbosity(verbosity: Verbosity): void {
