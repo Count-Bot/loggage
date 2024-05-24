@@ -1,22 +1,22 @@
 {
-	"name": "loggage",
-	"version": "1.0.0",
-	"description": "Simple logging package.",
-	"main": "build/index.js",
-	"type": "module",
-	"author": "Rick-vm",
-	"license": "MIT",
-	"devDependencies": {
-		"@types/node": "^20.1.5",
-		"@typescript-eslint/eslint-plugin": "^5.1.0",
-		"@typescript-eslint/parser": "^5.1.0",
-		"eslint": "^8.40.0",
-		"typescript": "^5.0.4"
-	},
-	"scripts": {
-		"app": "tsc && node .",
-		"check": "tsc --noEmit && eslint . --cache --fix",
-		"build": "tsc",
-		"prepare": "npm run build"
-	}
+  "name": "loggage",
+  "version": "1.0.0",
+  "description": "Simple logging package.",
+  "main": "build/index.js",
+  "type": "module",
+  "author": "Rick-vm",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^8.40.0",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "app": "tsc && node .",
+    "check": "tsc --noEmit && eslint . --cache --fix",
+    "build": "tsc",
+    "prepare": "npm run build"
+  }
 }
