@@ -1,5 +1,6 @@
-import { Console } from 'console';
-import { createWriteStream } from 'fs';
+import { Console } from 'node:console';
+import { createWriteStream } from 'node:fs';
+
 import { B, C, S } from '../formatting/index.js';
 import { LoggerOptions, Verbosity } from '../typings/logging.js';
 
@@ -32,7 +33,6 @@ export class Logger {
     this.verbosity = verbosity;
     this.logToFile = logToFile;
 
-    // Format timestamp
     const timestamp = new Date().toLocaleString().replace(/\//g, '-').replace(/:/g, ';').replace(',', '');
 
     this.console = new Console({
