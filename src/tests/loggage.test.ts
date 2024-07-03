@@ -27,7 +27,6 @@ describe('Test Loggage', () => {
     assert.equal(loggage.getSaveToFile(), true);
   });
 
-
   it('should send the correct error message', () => {
     const loggage = new Loggage({ name: 'My Project', verbosity: Verbosity.INFO, save: false });
 
