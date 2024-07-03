@@ -17,6 +17,7 @@
     "strict": true,
     "skipLibCheck": true,
     "moduleResolution": "Node",
+    "declaration": true
   },
   "include": [
     "./src/**/*",
