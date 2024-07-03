@@ -13,12 +13,19 @@
     "@typescript-eslint/parser": "^5.1.0",
     "eslint": "^8.56.0",
     "eslint-plugin-jsdoc": "^48.5.0",
+    "tsx": "^4.16.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.15.0"
   },
   "scripts": {
-    "build": "tsc",
-    "preinstall": "npm run build",
+    "test:lcov": "npm run build && node --import tsx --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
+    "test:spec": "npm run build && node --import tsx --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout",
+    "build:node": "tsc",
+    "build:ci": "tsc --noEmit",
+    "preinstall": "npm run build:node",
     "lint": "eslint src --cache --fix"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.11"
   }
 }

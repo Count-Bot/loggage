@@ -1,0 +1,39 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: CountBot Live Deployment
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  install:
+    name: ESLint and TypeScript compilation
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: [20]
+
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Lint Source Code
+        run: npm run test:spec
+
+      - name: Compile Source Code
+        run: npm run build:ci

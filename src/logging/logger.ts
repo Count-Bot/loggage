@@ -1,21 +1,10 @@
 import { Console } from 'node:console';
 import { createWriteStream } from 'node:fs';
+import dayjs from 'dayjs';
 
-import { B, C, S } from '../formatting/index.js';
+import { C, S } from '../formatting/index.js';
 import { LoggerOptions, Verbosity } from '../typings/logging.js';
-
-function pad(word: string, length = 18): string {
-  return ' '.repeat(Math.max(length - word.length, 1));
-}
-
-export const TAGS: Readonly<Record<keyof typeof Verbosity, string>> = {
-  FATAL_ERROR: S.reset(B.red(' ERROR ')) + ' ' + S.reset(B.magenta(' FATAL ')) + pad(' ERROR   FATAL '),
-  ERROR: S.reset(B.red(' ERROR ')) + pad(' ERROR '),
-  WARNING: S.reset(B.orange(' WARNING ')) + pad(' WARNING '),
-  INFO: S.reset(B.grey(' INFO ')) + pad(' INFO '),
-  DEBUG: S.reset(B.cyan(' DEBUG ')) + pad(' DEBUG '),
-  VERBOSE: S.reset(B.blue(' VERBOSE ')) + pad(' VERBOSE '),
-};
+import { TAGS } from './tags.js';
 
 export class Logger {
   private readonly console: Console;
@@ -33,20 +22,29 @@ export class Logger {
     this.verbosity = verbosity;
     this.logToFile = logToFile;
 
-    const timestamp = new Date().toLocaleString().replace(/\//g, '-').replace(/:/g, ';').replace(',', '');
+    const timestamp = dayjs(new Date()).format('YYYY-MM-DD HH-mm-ss');
 
     this.console = new Console({
       stdout: process.stdout,
     });
 
-    if (logToFile)
+    if (logToFile) {
       this.file = new Console({
         stdout: createWriteStream(`./logs/${name} ${timestamp}.log`),
       });
+    }
+  }
+
+  public getVerbosity(): Verbosity {
+    return this.verbosity;
   }
 
   public setVerbosity(verbosity: Verbosity): void {
     this.verbosity = verbosity;
+  }
+
+  public getName(): string {
+    return this.name;
   }
 
   public setName(name: string): void {
@@ -54,39 +52,48 @@ export class Logger {
   }
 
   public fatal_error(message: unknown): void {
-    if (this.verbosity >= Verbosity.FATAL_ERROR)
+    if (this.verbosity >= Verbosity.FATAL_ERROR) {
       this.log(TAGS.FATAL_ERROR, message);
+    }
   }
 
   public error(message: unknown): void {
-    if (this.verbosity >= Verbosity.ERROR)
+    if (this.verbosity >= Verbosity.ERROR) {
       this.log(TAGS.ERROR, message);
+    }
   }
 
   public warning(message: unknown): void {
-    if (this.verbosity >= Verbosity.WARNING)
+    if (this.verbosity >= Verbosity.WARNING) {
       this.log(TAGS.WARNING, message);
+    }
   }
 
   public info(message: unknown): void {
-    if (this.verbosity >= Verbosity.INFO)
+    if (this.verbosity >= Verbosity.INFO) {
       this.log(TAGS.INFO, message);
+    }
   }
 
   public debug(message: unknown): void {
-    if (this.verbosity >= Verbosity.DEBUG)
+    if (this.verbosity >= Verbosity.DEBUG) {
       this.log(TAGS.DEBUG, message);
+    }
   }
 
   public verbose(message: unknown): void {
-    if (this.verbosity >= Verbosity.VERBOSE)
+    if (this.verbosity >= Verbosity.VERBOSE) {
       this.log(TAGS.VERBOSE, message);
+    }
   }
 
   private log(tag: string, message: unknown): void {
     const log = `${S.reset(C.green(new Date().toLocaleTimeString()))} ${this.name} ${tag}`;
 
     this.console.log(log, message);
-    if (this.logToFile) this.file.log(log, message);
+
+    if (this.logToFile) {
+      this.file.log(log, message);
+    }
   }
 }
