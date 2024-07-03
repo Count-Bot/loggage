@@ -13,30 +13,7 @@ export class Loggage {
   private name: string;
   private verbosity: Verbosity;
 
-  public static TAGS: Readonly<Record<keyof typeof Verbosity, string>> = {
-    FATAL_ERROR: S.reset(B.red(' ERROR ')) + ' ' + S.reset(B.magenta(' FATAL ')) + this.pad(' ERROR   FATAL '),
-    ERROR: S.reset(B.red(' ERROR ')) + this.pad(' ERROR '),
-    WARNING: S.reset(B.orange(' WARNING ')) + this.pad(' WARNING '),
-    INFO: S.reset(B.grey(' INFO ')) + this.pad(' INFO '),
-    DEBUG: S.reset(B.cyan(' DEBUG ')) + this.pad(' DEBUG '),
-    VERBOSE: S.reset(B.blue(' VERBOSE ')) + this.pad(' VERBOSE '),
-  };
-
-  /**
-   * Pad a word with spaces to the right.
-   * @param word The word to pad.
-   * @param length The length of the padding.
-   * @returns  string
-   */
-  private static pad(word: string, length = 18): string {
-    return ' '.repeat(Math.max(length - word.length, 1));
-  }
-
-  constructor ({
-    name,
-    verbosity = Verbosity.INFO,
-    save = true,
-  }: LoggageOptions) {
+  constructor ({ name, verbosity = Verbosity.INFO, save = false, }: LoggageOptions) {
     this.name = name;
     this.verbosity = verbosity;
     this.save = save;
@@ -53,6 +30,15 @@ export class Loggage {
       });
     }
   }
+
+  public static TAGS: Readonly<Record<keyof typeof Verbosity, string>> = {
+    FATAL_ERROR: S.reset(B.red(' ERROR ')) + ' ' + S.reset(B.magenta(' FATAL ')) + this.pad(' ERROR   FATAL '),
+    ERROR: S.reset(B.red(' ERROR ')) + this.pad(' ERROR '),
+    WARNING: S.reset(B.orange(' WARNING ')) + this.pad(' WARNING '),
+    INFO: S.reset(B.grey(' INFO ')) + this.pad(' INFO '),
+    DEBUG: S.reset(B.cyan(' DEBUG ')) + this.pad(' DEBUG '),
+    VERBOSE: S.reset(B.blue(' VERBOSE ')) + this.pad(' VERBOSE '),
+  };
 
   public getVerbosity(): Verbosity {
     return this.verbosity;
@@ -122,5 +108,15 @@ export class Loggage {
     if (this.save && this.file) {
       this.file.log(log, message);
     }
+  }
+
+  /**
+   * Pad a word with spaces to the right.
+   * @param word The word to pad.
+   * @param length The length of the padding.
+   * @returns  string
+   */
+  private static pad(word: string, length = 18): string {
+    return ' '.repeat(Math.max(length - word.length, 1));
   }
 }
