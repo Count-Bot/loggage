@@ -7,8 +7,8 @@ export enum Verbosity {
   VERBOSE,
 }
 
-export interface LoggerOptions {
+export interface LoggageOptions {
   name: string,
   verbosity?: Verbosity,
-  logToFile?: boolean,
+  save?: boolean,
 }

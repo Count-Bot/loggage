@@ -6,9 +6,9 @@ Install loggage by entering `npm i @countbot/loggage` into your CLI.
 
 # Usage
 ```ts
-const logger = new Logger({ name: 'My Project', verbosity: Verbosity.INFO, logToFile: false });
+const loggage = new Loggage({ name: 'My Project', verbosity: Verbosity.INFO, logToFile: false });
 
-logger.warning('This is a warning message');
+loggage.warning('This is a warning message');
 ```
 
 # Output
