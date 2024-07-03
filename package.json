@@ -18,8 +18,8 @@
     "typescript-eslint": "^7.15.0"
   },
   "scripts": {
-    "test:lcov": "npm run build && node --import tsx --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
-    "test:spec": "npm run build && node --import tsx --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout",
+    "test:lcov": "npm run build:node && node --import tsx --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
+    "test:spec": "npm run build:node && node --import tsx --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout",
     "build:node": "tsc",
     "build:ci": "tsc --noEmit",
     "preinstall": "npm run build:node",
