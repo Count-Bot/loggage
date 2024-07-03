@@ -1,6 +1,6 @@
 {
   "name": "@countbot/loggage",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Simple logging library for Node.js",
   "type": "module",
   "author": "Rick-vm",
