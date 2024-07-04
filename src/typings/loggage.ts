@@ -8,7 +8,7 @@ export enum Verbosity {
 }
 
 export interface LoggageOptions {
-  name: string,
-  verbosity?: Verbosity,
-  save?: boolean,
+  name: string;
+  verbosity?: Verbosity;
+  save?: boolean;
 }

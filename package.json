@@ -1,6 +1,6 @@
 {
   "name": "@countbot/loggage",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Simple logging library for Node.js",
   "type": "module",
   "author": "Rick-vm",
@@ -11,15 +11,16 @@
   },
   "homepage": "https://github.com/Count-Bot/loggage#readme",
   "devDependencies": {
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^8.56.0",
     "@types/node": "^20.14.9",
-    "@typescript-eslint/eslint-plugin": "^5.1.0",
-    "@typescript-eslint/parser": "^5.1.0",
-    "eslint": "^8.56.0",
-    "eslint-plugin-jsdoc": "^48.5.0",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "eslint-formatter-pretty": "^5.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "prettier": "^3.3.2",
     "tsx": "^4.16.0",
-    "typescript": "^5.4.5",
+    "typescript": "^5.5.3",
     "typescript-eslint": "^7.15.0"
   },
   "dependencies": {
@@ -33,11 +34,12 @@
     }
   },
   "scripts": {
-    "test:lcov": "npm run build:node && node --import tsx --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
-    "test:spec": "npm run build:node && node --import tsx --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout",
     "build:node": "tsc",
     "build:ci": "tsc --noEmit",
+    "format": "prettier --write . && cross-env ESLINT_USE_FLAT_CONFIG=false eslint --fix --format=pretty src",
+    "lint": "prettier --check . && cross-env ESLINT_USE_FLAT_CONFIG=false eslint --format=pretty src",
     "preinstall": "npm run build:node",
-    "lint": "eslint src --cache --fix"
+    "test:lcov": "npm run build:node && node --import tsx --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
+    "test:spec": "npm run build:node && node --import tsx --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout"
   }
 }

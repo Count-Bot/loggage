@@ -1,6 +1,6 @@
+import { strict as assert } from 'node:assert';
 import { describe, it } from 'node:test';
 import { Loggage, Verbosity } from '../index.js';
-import { strict as assert } from 'node:assert';
 
 describe('Test Loggage', () => {
   it('should set the verbosity level correctly', () => {

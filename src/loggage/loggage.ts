@@ -1,5 +1,6 @@
 import { Console } from 'node:console';
 import { createWriteStream } from 'node:fs';
+import process from 'node:process';
 import dayjs from 'dayjs';
 
 import { B, C, S } from '../formatting/index.js';
@@ -13,7 +14,7 @@ export class Loggage {
   private name: string;
   private verbosity: Verbosity;
 
-  constructor ({ name, verbosity = Verbosity.INFO, save = false, }: LoggageOptions) {
+  constructor({ name, verbosity = Verbosity.INFO, save = false }: LoggageOptions) {
     this.name = name;
     this.verbosity = verbosity;
     this.save = save;
@@ -32,7 +33,7 @@ export class Loggage {
   }
 
   public static TAGS: Readonly<Record<keyof typeof Verbosity, string>> = {
-    FATAL_ERROR: S.reset(B.red(' ERROR ')) + ' ' + S.reset(B.magenta(' FATAL ')) + this.pad(' ERROR   FATAL '),
+    FATAL_ERROR: `${S.reset(B.red(' ERROR '))} ${S.reset(B.magenta(' FATAL '))}${this.pad(' ERROR   FATAL ')}`,
     ERROR: S.reset(B.red(' ERROR ')) + this.pad(' ERROR '),
     WARNING: S.reset(B.orange(' WARNING ')) + this.pad(' WARNING '),
     INFO: S.reset(B.grey(' INFO ')) + this.pad(' INFO '),
@@ -112,9 +113,9 @@ export class Loggage {
 
   /**
    * Pad a word with spaces to the right.
-   * @param word The word to pad.
-   * @param length The length of the padding.
-   * @returns  string
+   * @param {string} word The word to pad.
+   * @param {number} length The length of the padding.
+   * @returns {string} string
    */
   private static pad(word: string, length = 18): string {
     return ' '.repeat(Math.max(length - word.length, 1));
