@@ -6,7 +6,7 @@ name: Continuous Integration / Deployment
 on:
   push:
     branches:
-      - '**'
+      - "**"
   pull_request:
 
 jobs:
@@ -32,8 +32,11 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Lint Source Code
-        run: npm run test:spec
-
       - name: Compile Source Code
         run: npm run build:ci
+
+      - name: Test Source Code
+        run: npm run test:spec
+
+      - name: Lint Source Code
+        run: npm run lint
