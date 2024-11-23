@@ -23,11 +23,13 @@ export class Loggage {
 
     this.console = new Console({
       stdout: process.stdout,
+      stderr: process.stderr,
     });
 
     if (save) {
       this.file = new Console({
         stdout: createWriteStream(`./logs/${name} ${timestamp}.log`),
+        stderr: createWriteStream(`./logs/${name} ${timestamp}.err.log`),
       });
     }
   }
@@ -67,48 +69,68 @@ export class Loggage {
 
   public fatal_error(message: unknown): void {
     if (this.verbosity >= Verbosity.FATAL_ERROR) {
-      this.log(Loggage.TAGS.FATAL_ERROR, message);
+      this.log(Loggage.TAGS.FATAL_ERROR, message, true);
     }
   }
 
   public error(message: unknown): void {
     if (this.verbosity >= Verbosity.ERROR) {
-      this.log(Loggage.TAGS.ERROR, message);
+      this.log(Loggage.TAGS.ERROR, message, true);
     }
   }
 
   public warning(message: unknown): void {
     if (this.verbosity >= Verbosity.WARNING) {
-      this.log(Loggage.TAGS.WARNING, message);
+      this.log(Loggage.TAGS.WARNING, message, false);
     }
   }
 
   public info(message: unknown): void {
     if (this.verbosity >= Verbosity.INFO) {
-      this.log(Loggage.TAGS.INFO, message);
+      this.log(Loggage.TAGS.INFO, message, false);
     }
   }
 
   public debug(message: unknown): void {
     if (this.verbosity >= Verbosity.DEBUG) {
-      this.log(Loggage.TAGS.DEBUG, message);
+      this.log(Loggage.TAGS.DEBUG, message, false);
     }
   }
 
   public verbose(message: unknown): void {
     if (this.verbosity >= Verbosity.VERBOSE) {
-      this.log(Loggage.TAGS.VERBOSE, message);
+      this.log(Loggage.TAGS.VERBOSE, message, false);
     }
   }
 
-  private log(tag: string, message: unknown): void {
-    const log = `${S.reset(C.green(new Date().toLocaleTimeString()))} ${this.name} ${tag}`;
+  private log(tag: string, message: unknown, err: boolean): void {
+    const log = this.formatLogMessage(tag);
 
-    this.console.log(log, message);
+    if (err) {
+      this.logError(log, message);
+    } else {
+      this.logMessage(log, message);
+    }
+  }
 
+  private formatLogMessage(tag: string): string {
+    return `${S.reset(C.green(new Date().toLocaleTimeString()))} ${this.name} ${tag}`;
+  }
+
+  private logError(log: string, message: unknown): void {
+    if (this.save && this.file) {
+      this.file.error(log, message);
+    }
+
+    this.console.error(log, message);
+  }
+
+  private logMessage(log: string, message: unknown): void {
     if (this.save && this.file) {
       this.file.log(log, message);
     }
+
+    this.console.log(log, message);
   }
 
   /**
