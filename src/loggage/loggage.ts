@@ -119,7 +119,7 @@ export class Loggage {
 
   private logError(log: string, message: unknown): void {
     if (this.save && this.file) {
-      this.file.error(log, message);
+      this.file.error(`${new Date().toLocaleTimeString()} ${this.name}`, message);
     }
 
     this.console.error(log, message);
@@ -127,7 +127,7 @@ export class Loggage {
 
   private logMessage(log: string, message: unknown): void {
     if (this.save && this.file) {
-      this.file.log(log, message);
+      this.file.log(`${new Date().toLocaleTimeString()} ${this.name}`, message);
     }
 
     this.console.log(log, message);
