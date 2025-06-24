@@ -1,6 +1,6 @@
 {
   "name": "@countbot/loggage",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Simple logging library for Node.js",
   "type": "module",
   "author": "Rick-vm",
@@ -11,20 +11,17 @@
   },
   "homepage": "https://github.com/Count-Bot/loggage#readme",
   "devDependencies": {
+    "@eslint/js": "^9.27.0",
     "@types/node": "^22.9.3",
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
-    "@typescript-eslint/parser": "^7.15.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.57.0",
+    "eslint": "^9.16.0",
     "eslint-formatter-pretty": "^5.0.0",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import": "^2.31.0",
+    "globals": "^15.14.0",
     "prettier": "^3.3.2",
-    "tsx": "^4.16.0",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^7.15.0"
-  },
-  "dependencies": {
-    "dayjs": "^1.11.13"
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
   },
   "files": [
     "src",
@@ -40,10 +37,13 @@
   "scripts": {
     "build:node": "tsc",
     "build:ci": "tsc --noEmit",
-    "format": "prettier --write . && cross-env ESLINT_USE_FLAT_CONFIG=false eslint --fix --format=pretty src",
-    "lint": "prettier --check . && cross-env ESLINT_USE_FLAT_CONFIG=false eslint --format=pretty src",
+    "format": "prettier --write . && eslint --fix --format=pretty src",
+    "lint": "prettier --check . && eslint --format=pretty src",
     "prepare": "npm run build:node",
     "test:lcov": "npm run build:node && node --import tsx --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info",
     "test:spec": "npm run build:node && node --import tsx --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13"
   }
 }

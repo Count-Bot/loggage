@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 
 import { B, C, S } from '../formatting/index.js';
 import { LoggageOptions, Verbosity } from '../typings/loggage.js';
+import { existsSync, mkdirSync } from 'node:fs';
 
 export class Loggage {
   private readonly console: Console;
@@ -27,6 +28,10 @@ export class Loggage {
     });
 
     if (save) {
+      if (!existsSync('./logs')) {
+        mkdirSync('./logs', { recursive: true });
+      }
+
       this.file = new Console({
         stdout: createWriteStream(`./logs/${name} ${timestamp}.log`),
         stderr: createWriteStream(`./logs/${name} ${timestamp}.err.log`),
