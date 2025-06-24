@@ -1,11 +1,11 @@
 import { Console } from 'node:console';
 import { createWriteStream } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import process from 'node:process';
 import dayjs from 'dayjs';
 
 import { B, C, S } from '../formatting/index.js';
 import { LoggageOptions, Verbosity } from '../typings/loggage.js';
-import { existsSync, mkdirSync } from 'node:fs';
 
 export class Loggage {
   private readonly console: Console;
