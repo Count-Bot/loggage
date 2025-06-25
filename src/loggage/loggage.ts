@@ -15,7 +15,7 @@ export class Loggage {
   private name: string;
   private verbosity: Verbosity;
 
-  constructor({ name, verbosity = Verbosity.INFO, save = false }: LoggageOptions) {
+  constructor({ name, verbosity = Verbosity.Info, save = false }: LoggageOptions) {
     this.name = name;
     this.verbosity = verbosity;
     this.save = save;
@@ -40,12 +40,12 @@ export class Loggage {
   }
 
   public static TAGS: Readonly<Record<keyof typeof Verbosity, string>> = {
-    FATAL_ERROR: `${S.reset(B.red(' ERROR '))} ${S.reset(B.magenta(' FATAL '))}${this.pad(' ERROR   FATAL ')}`,
-    ERROR: S.reset(B.red(' ERROR ')) + this.pad(' ERROR '),
-    WARNING: S.reset(B.orange(' WARNING ')) + this.pad(' WARNING '),
-    INFO: S.reset(B.grey(' INFO ')) + this.pad(' INFO '),
-    DEBUG: S.reset(B.cyan(' DEBUG ')) + this.pad(' DEBUG '),
-    VERBOSE: S.reset(B.blue(' VERBOSE ')) + this.pad(' VERBOSE '),
+    FatalError: `${S.reset(B.red(' ERROR '))} ${S.reset(B.magenta(' FATAL '))}${this.pad(' ERROR   FATAL ')}`,
+    Error: S.reset(B.red(' ERROR ')) + this.pad(' ERROR '),
+    Warning: S.reset(B.orange(' WARNING ')) + this.pad(' WARNING '),
+    Info: S.reset(B.grey(' INFO ')) + this.pad(' INFO '),
+    Debug: S.reset(B.cyan(' DEBUG ')) + this.pad(' DEBUG '),
+    Verbose: S.reset(B.blue(' VERBOSE ')) + this.pad(' VERBOSE '),
   };
 
   public getVerbosity(): Verbosity {
@@ -73,38 +73,38 @@ export class Loggage {
   }
 
   public fatal_error(message: unknown): void {
-    if (this.verbosity >= Verbosity.FATAL_ERROR) {
-      this.log(Loggage.TAGS.FATAL_ERROR, message, true);
+    if (this.verbosity >= Verbosity.FatalError) {
+      this.log(Loggage.TAGS.FatalError, message, true);
     }
   }
 
   public error(message: unknown): void {
-    if (this.verbosity >= Verbosity.ERROR) {
-      this.log(Loggage.TAGS.ERROR, message, true);
+    if (this.verbosity >= Verbosity.Error) {
+      this.log(Loggage.TAGS.Error, message, true);
     }
   }
 
   public warning(message: unknown): void {
-    if (this.verbosity >= Verbosity.WARNING) {
-      this.log(Loggage.TAGS.WARNING, message, false);
+    if (this.verbosity >= Verbosity.Warning) {
+      this.log(Loggage.TAGS.Warning, message, false);
     }
   }
 
   public info(message: unknown): void {
-    if (this.verbosity >= Verbosity.INFO) {
-      this.log(Loggage.TAGS.INFO, message, false);
+    if (this.verbosity >= Verbosity.Info) {
+      this.log(Loggage.TAGS.Info, message, false);
     }
   }
 
   public debug(message: unknown): void {
-    if (this.verbosity >= Verbosity.DEBUG) {
-      this.log(Loggage.TAGS.DEBUG, message, false);
+    if (this.verbosity >= Verbosity.Debug) {
+      this.log(Loggage.TAGS.Debug, message, false);
     }
   }
 
   public verbose(message: unknown): void {
-    if (this.verbosity >= Verbosity.VERBOSE) {
-      this.log(Loggage.TAGS.VERBOSE, message, false);
+    if (this.verbosity >= Verbosity.Verbose) {
+      this.log(Loggage.TAGS.Verbose, message, false);
     }
   }
 

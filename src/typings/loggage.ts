@@ -1,10 +1,10 @@
 export enum Verbosity {
-  FATAL_ERROR,
-  ERROR,
-  WARNING,
-  INFO,
-  DEBUG,
-  VERBOSE,
+  FatalError,
+  Error,
+  Warning,
+  Info,
+  Debug,
+  Verbose,
 }
 
 export interface LoggageOptions {
